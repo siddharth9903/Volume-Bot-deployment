@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "../interfaces/IParlayCoreSimple.sol";
+import "./IParlayCoreSimple.sol";
 
 /// @title ParlayUserToken
 /// @notice This contract implements an ERC20 token with permit functionality.

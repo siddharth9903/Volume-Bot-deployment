@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.20;
 
-import "../token/BasicParlayToken.sol";
-import "../token/AntiWhaleParlayToken.sol";
+import "./BasicParlayToken.sol";
+import "./AntiWhaleParlayToken.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
-import "uniswap-v2-periphery/interfaces/IUniswapV2Router02.sol";
+import '@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol';
 
 interface IParlayToken {
   function removeLimits() external;
@@ -45,8 +45,8 @@ contract ParlayCoreSimple is Ownable, EIP712 {
   mapping(address => Lock) public creatorLocks;
   mapping(address => uint256) public signatureNonces;
 
-  bytes32 public constant CREATE_TYPEHASH;
-  bytes32 public constant INIT_CODE_PAIR_HASH;
+  bytes32 public immutable CREATE_TYPEHASH;
+  bytes32 public immutable INIT_CODE_PAIR_HASH;
 
   address public immutable uniswapV2Router02;
   address public immutable burnAddress;
@@ -499,7 +499,7 @@ contract ParlayCoreSimple is Ownable, EIP712 {
   /// @return structHash The struct hash
   function getCreateTokenRequestStructHash(
     CreateTokenRequest memory _createTokenRequest
-  ) internal pure returns (bytes32 structHash) {
+  ) internal view returns (bytes32 structHash) {
     return
       keccak256(
         abi.encode(
